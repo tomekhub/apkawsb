@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 p-2">
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12" [mapTypeControl]="'true'">
+        <agm-marker [latitude]="lat" [longitude]="lng" iconUrl="../../assets/marker.png">
+        </agm-marker>
+        <ng-container *ngFor="let station of airStations">
+          <agm-marker [latitude]="station.measurer.geom.coordinates[1]" [longitude]="station.measurer.geom.coordinates[0]">
+          </agm-marker>
+          <agm-circle [latitude]="station.measurer.geom.coordinates[1] + 0.0003" [longitude]="station.measurer.geom.coordinates[0]" 
+            [radius]="800"
+            [fillColor]="getColor(station.pm10)">
+          </agm-circle>
+        </ng-container>
+      </agm-map>
+    </div>
+  </div>
+
+</div>
