@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, ViewChild, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { AirStation } from '../airStation.model';
 
 @Component({
   selector: 'app-chart',
@@ -9,53 +10,85 @@ import { Chart } from 'chart.js';
 export class ChartComponent implements OnChanges, OnInit {
 
   myChart: Chart;
+  myPieChart: Chart;
   @Input() chartData;
   @ViewChild('myChart') private chartRef;
+
+  private good = 0;
+  private bad = 0;
+  private takietam = 0;
 
   constructor() { }
 
   ngOnInit() {
-    this.createChart('dsa');
-  }
-
-  ngOnChanges() {
     // this.createChart('dsa');
   }
 
-  createChart(chartData) {
+  ngOnChanges() {
+    if (this.chartData) this.createChart();
+  }
 
-    const data = {
-
-    };
-
+  createChart() {
     const ctx = document.getElementById('myChart');
+    const pctx = document.getElementById('myPieChart');
+
+    const data = [];
+    const labels = [];
+    const backgroundColor = [];
+
+    this.chartData.forEach((station: AirStation) => {
+      data.push(station.pm10);
+      backgroundColor.push(this.checkColor(station.pm10));
+      labels.push('');
+    });
+
     this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
+          data,
+          backgroundColor,
+        }],
+        labels
+      },
+      options: {
+        legend: {
+          display: false
+        }
       }
     });
+
+    this.myPieChart = new Chart(pctx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [this.good, this.bad, this.takietam],
+          backgroundColor: ['green', 'red', 'orange'],
+        }],
+        labels: ['W normie', 'Złe', 'Stan alarmowy']
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        tooltips: {
+          displayColors: false
+        }
+      }
+    });
+  }
+
+  checkColor(pm10: number) {
+    if (pm10 < 50) {
+      this.good++;
+      return 'green';
+    } else if (pm10 < 200) {
+      this.takietam++;
+      return 'orange';
+    } else {
+      this.bad++;
+      return 'red';
+    }
   }
 
 }
