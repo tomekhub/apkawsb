@@ -38,6 +38,7 @@
     "jquery": "^3.3.1",
     "rxjs": "~6.3.3",
     "snazzy-info-window": "^1.1.0",
+    "spherical-geometry-js": "^1.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },

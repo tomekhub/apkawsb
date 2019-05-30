@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { AirStation } from '../airStation.model';
 
@@ -7,11 +7,12 @@ import { AirStation } from '../airStation.model';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnChanges, OnInit {
+export class ChartComponent implements OnChanges {
 
   myChart: Chart;
   myPieChart: Chart;
   @Input() chartData;
+  @Input() closestAirStation;
   @ViewChild('myChart') private chartRef;
 
   private good = 0;
@@ -20,12 +21,8 @@ export class ChartComponent implements OnChanges, OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    // this.createChart('dsa');
-  }
-
   ngOnChanges() {
-    if (this.chartData) this.createChart();
+    if (this.chartData) { this.createChart(); }
   }
 
   createChart() {

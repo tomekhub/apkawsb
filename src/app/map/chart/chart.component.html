@@ -1,10 +1,15 @@
 <div class="chart-panel">
   <div class="container">
-    <div class="row justify-content-center p-4">
-      <canvas class="mx-auto" id="myChart" width="50" height="40"></canvas>
+    <div class="row  pt-5 justify-content-center">
+      <mat-card>
+        <h5>Dane z najblizszej stacji:</h5>
+        <h6>PM10: {{closestAirStation.pm10}}</h6>
+        <h6>PM2.5: {{closestAirStation.pm25}}</h6>
+      </mat-card>
     </div>
     <div class="row justify-content-center p-4">
-      <canvas class="mx-auto" id="myPieChart" width="50" height="40"></canvas>
+      <p>Dane dla PM10:</p>
+      <canvas class="mx-auto" id="myChart" width="50" height="40"></canvas>
     </div>
 
   </div>

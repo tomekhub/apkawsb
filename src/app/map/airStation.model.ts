@@ -9,4 +9,5 @@ export interface AirStation {
     humidity: number;
     id_air: number;
     measurer: {geom: Geom};
+    distance: number;
 }

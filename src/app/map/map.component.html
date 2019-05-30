@@ -27,4 +27,4 @@
     clear
   </i>
 </a>
-<app-chart class="info-panel" [ngClass]="{'show': panelOpen}" [chartData]="airStations"></app-chart>
+<app-chart *ngIf="closestAirStation" class="info-panel" [closestAirStation]="closestAirStation" [ngClass]="{'show': panelOpen}" [chartData]="airStations"></app-chart>
